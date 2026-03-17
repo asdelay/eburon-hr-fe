@@ -50,14 +50,14 @@ export default function CandidatesModule() {
 
       {loading ? (
         <p className="text-white/60">Loading candidates...</p>
-      ) : candidates.length === 0 ? (
+      ) : !candidates || candidates.length < 1 ? (
         <p className="text-white/60">
           No candidates found. {roleSearch ? "Try a different search." : ""}
         </p>
       ) : (
         <ul className="space-y-4">
           {candidates.map((c) => (
-            <CandidateCard key={c.id} candidate={c} />
+            <CandidateCard key={c.id} {...c} />
           ))}
         </ul>
       )}

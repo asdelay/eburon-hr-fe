@@ -16,10 +16,10 @@ export async function getCandidate(id: string): Promise<Candidate> {
   const data = await response.json();
   return {
     id: data.id,
-    fullName: data.fullName,
+    fullName: data?.fullName || 'No fullname',
     email: data.email,
     phone: data.phone ?? null,
-    role: data.role,
+    role: data.role || 'candidate',
     experience: data.experience,
   };
 }

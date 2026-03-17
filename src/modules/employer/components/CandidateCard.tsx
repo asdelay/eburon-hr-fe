@@ -1,19 +1,21 @@
 import { type EmployerCandidate } from "@/types/employer";
 import { FC } from "react";
 
-interface CandidateCardProps {
-  candidate: EmployerCandidate;
-}
-
-const CandidateCard: FC<CandidateCardProps> = ({ candidate }) => {
-  const { fullName, role, experience, email, latestInterview, phone } =
-    candidate;
-
+const CandidateCard: FC<EmployerCandidate> = ({
+  fullName,
+  role = "candidate",
+  experience,
+  email,
+  latestInterview,
+  phone,
+}) => {
   return (
     <li className="rounded-lg border border-white/30 p-4 hover:border-white/50 transition-colors">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="font-semibold text-lg">{fullName}</h2>
+          <h2 className="font-semibold text-lg">
+            {fullName || "No full name"}
+          </h2>
           <p className="text-white/70 text-sm">{role}</p>
 
           <p className="text-white/50 text-sm">

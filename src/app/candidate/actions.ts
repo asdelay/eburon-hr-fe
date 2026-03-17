@@ -7,9 +7,9 @@ export const sendCandidateData = async (
   data: FormData
 ) => {
   const payload = {
-    fullName: data.get("fullName"),
+    fullName: data.get("fullName") || 'No name provided',
     email: data.get("email"),
-    role: data.get("role"),
+    role: data.get("role") || 'candidate',
     experience: data.get("experience"),
     phone: data.get("phone") ? data.get("phone") : null
   };
