@@ -16,7 +16,7 @@ export default function CandidatesModule() {
 
   return (
     <>
-      <div className="flex flex-col items-start sm:flex-row gap-4 mb-6">
+      <div className="flex flex-col items-start sm:flex-row-reverse sm:items-center gap-4 mb-6">
         <button
           onClick={() => downloadCandidates(candidates)}
           disabled={candidates.length === 0}
