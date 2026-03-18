@@ -29,7 +29,7 @@ export default function CandidatesModule() {
           value={roleSearch}
           onChange={(e) => setRoleSearch(e.target.value)}
           placeholder="Search by role (e.g. frontend, junior)"
-          className="w-full flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-white/50"
+          className="w-full h-10 flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-white/50"
           aria-label="Search by role"
         />
         <select
@@ -40,7 +40,7 @@ export default function CandidatesModule() {
               setSortBy(sortOption);
             }
           }}
-          className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/20 text-white focus:outline-none focus:border-white/50"
+          className="w-full h-10 sm:w-auto px-4 py-2 rounded-lg bg-white/5 border border-white/20 text-white focus:outline-none focus:border-white/50"
           aria-label="Sort by confidence"
         >
           <option value="confidence_desc">Confidence: High → Low</option>
