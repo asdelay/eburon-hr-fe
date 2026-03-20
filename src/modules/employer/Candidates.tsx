@@ -5,25 +5,51 @@ import { useCandidates } from "./hooks";
 import CandidateCard from "./components/CandidateCard";
 import { isSortBy } from "@/utils";
 import { downloadCandidates } from "./helpers";
-import { Download } from "lucide-react";
+import { Download, ListFilterPlus } from "lucide-react";
+import FilterCandidates from "./components/FilterCandidates";
+import { AnimatePresence } from "motion/react";
 
 export default function CandidatesModule() {
   const [roleSearch, setRoleSearch] = useState("");
   const [sortBy, setSortBy] = useState<"confidence_asc" | "confidence_desc">(
     "confidence_desc",
   );
-  const { candidates, loading } = useCandidates(roleSearch, sortBy);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("all");
+
+  const { candidates, loading } = useCandidates(
+    roleSearch,
+    sortBy,
+    selectedOption,
+  );
 
   return (
     <>
       <div className="flex flex-col items-start sm:flex-row-reverse sm:items-center gap-4 mb-6">
-        <button
-          onClick={() => downloadCandidates(candidates)}
-          disabled={candidates.length === 0}
-          className="text-white/70 duration-150 hover:text-white/80 cursor-pointer disabled:cursor-not-allowed disabled:opacity-20"
-        >
-          <Download />
-        </button>
+        <div className="flex gap-4 items-center">
+          <button
+            onClick={() => downloadCandidates(candidates)}
+            disabled={candidates.length === 0}
+            className="cursor-pointer disabled:cursor-not-allowed disabled:opacity-20"
+          >
+            <Download />
+          </button>
+          <button
+            className="cursor-pointer"
+            onClick={() => setShowModal((isShowModal) => !isShowModal)}
+          >
+            <ListFilterPlus />
+          </button>
+        </div>
+        <AnimatePresence>
+          {showModal && (
+            <FilterCandidates
+              setSelectedOption={setSelectedOption}
+              setShowModal={setShowModal}
+            />
+          )}
+        </AnimatePresence>
+
         <input
           type="search"
           value={roleSearch}

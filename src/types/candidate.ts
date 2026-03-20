@@ -4,5 +4,5 @@ export interface Candidate {
     email: string;
     phone: string;
     role: string;
-    experience: string;
+    experience: number;
 }

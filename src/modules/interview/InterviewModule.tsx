@@ -10,7 +10,7 @@ import InterviewQuestion from "./components/InterviewQuestion";
 type Props = {
   candidateId: string;
   role: string;
-  experience: string;
+  experience: number;
 };
 
 export default function InterviewModule({
@@ -41,9 +41,7 @@ export default function InterviewModule({
   }
 
   if (phase === "idle") {
-    return (
-      <InterviewIdle onStart={handleStartInterview} error={error} />
-    );
+    return <InterviewIdle onStart={handleStartInterview} error={error} />;
   }
 
   if (phase === "loading_questions") {

@@ -1,4 +1,5 @@
 import { type EmployerCandidate } from "@/types/employer";
+import { monthsToMonthYears } from "@/utils/dates";
 import { FC } from "react";
 
 const CandidateCard: FC<EmployerCandidate> = ({
@@ -19,7 +20,7 @@ const CandidateCard: FC<EmployerCandidate> = ({
           <p className="text-white/70 text-sm">{role}</p>
 
           <p className="text-white/50 text-sm">
-            {experience} • {email}
+            {`Experience: ${monthsToMonthYears(experience)}`} • {email}
           </p>
           {phone && <p className="text-white/50 text-sm">{phone}</p>}
         </div>

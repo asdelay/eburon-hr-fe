@@ -4,7 +4,7 @@ export type EmployerCandidate = {
   email: string;
   phone: string | null;
   role: string;
-  experience: string;
+  experience: number;
   createdAt: string;
   latestInterview: {
     confidence: number;

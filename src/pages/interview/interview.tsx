@@ -1,6 +1,7 @@
 import Link from "next/link";
 import InterviewModule from "@/modules/interview/InterviewModule";
 import { Candidate } from "@/types/candidate";
+import { monthsToMonthYears } from "@/utils/dates";
 
 type Props = {
   candidate?: Candidate;
@@ -54,7 +55,7 @@ export default function InterviewPage({ candidate, candidateId }: Props) {
           </div>
           <div>
             <span className="text-white/60">Experience:</span>{" "}
-            <span>{candidate.experience || "—"}</span>
+            <span>{monthsToMonthYears(candidate.experience) || "—"}</span>
           </div>
         </dl>
       </section>
@@ -62,7 +63,7 @@ export default function InterviewPage({ candidate, candidateId }: Props) {
       <InterviewModule
         candidateId={candidateId}
         role={candidate.role || ""}
-        experience={candidate.experience || ""}
+        experience={candidate.experience || 0}
       />
     </div>
   );

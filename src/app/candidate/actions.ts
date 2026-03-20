@@ -6,11 +6,12 @@ export const sendCandidateData = async (
   prevState: { message: string },
   data: FormData
 ) => {
+  const experience = Number(data.get("experience-y")) * 12 + Number(data.get("experience-m"))
   const payload = {
     fullName: data.get("fullName") || 'No name provided',
     email: data.get("email"),
     role: data.get("role") || 'candidate',
-    experience: data.get("experience"),
+    experience: experience,
     phone: data.get("phone") ? data.get("phone") : null
   };
 

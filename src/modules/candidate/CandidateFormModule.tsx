@@ -49,15 +49,38 @@ export default function CandidateFormModule() {
         className={inputClass}
         required
       />
-      <label htmlFor="experience">Enter your experience *</label>
-      <input
-        id="experience"
-        name="experience"
-        type="text"
-        placeholder="1 year / 3 months / etc"
-        className={inputClass}
-        required
-      />
+      <h3>Enter Your Experience</h3>
+      <div className="flex gap-2">
+        <div className="w-full">
+          <label htmlFor="experience-y" className="text-sm opacity-70">
+            Years
+          </label>
+          <input
+            id="experience-y"
+            name="experience-y"
+            type="number"
+            min={0}
+            max={99}
+            placeholder="0 years / 5 years"
+            className={inputClass}
+          />
+        </div>
+        <div className="w-full">
+          <label htmlFor="experience-m" className="text-sm opacity-70">
+            Months
+          </label>
+          <input
+            id="experience-m"
+            name="experience-m"
+            type="number"
+            min={0}
+            max={12}
+            placeholder="0 months / 12 months"
+            className={inputClass}
+          />
+        </div>
+      </div>
+
       {state?.message && (
         <p aria-live="polite" className="text-red-400 my-2">
           {state.message}
@@ -69,7 +92,7 @@ export default function CandidateFormModule() {
         <Button variant="outline" type="reset">
           Reset
         </Button>
-        <Button type="submit" disabled={pending}>
+        <Button type="submit" disabled={pending} className="w-full">
           {pending ? "Loading..." : "Start AI Interview"}
         </Button>
       </div>

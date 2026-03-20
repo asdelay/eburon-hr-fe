@@ -4,7 +4,7 @@ export type StoredInterview = {
   questions: string[];
   answers: { question: string; answer: string }[];
   role: string;
-  experience: string;
+  experience: number;
 };
 
 export function loadStored(candidateId: string): StoredInterview | null {

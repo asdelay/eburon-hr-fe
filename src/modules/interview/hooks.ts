@@ -18,7 +18,7 @@ export type InterviewPhase =
 
 export type InterviewResult = { confidence: number; label: string };
 
-export function useInterview(candidateId: string, role: string, experience: string) {
+export function useInterview(candidateId: string, role: string, experience: number) {
   const [phase, setPhase] = useState<InterviewPhase>("idle");
   const [questions, setQuestions] = useState<string[]>([]);
   const [answers, setAnswers] = useState<{ question: string; answer: string }[]>(
@@ -47,7 +47,7 @@ export function useInterview(candidateId: string, role: string, experience: stri
       q: string[],
       a: { question: string; answer: string }[],
       r: string,
-      exp: string,
+      exp: number,
     ) => {
       setPhase("submitting");
       setError(null);

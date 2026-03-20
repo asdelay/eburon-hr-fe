@@ -1,6 +1,6 @@
 export async function fetchGenerateQuestions(
   role: string,
-  experience: string,
+  experience: number,
 ): Promise<string[]> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/interview/generate-questions`,
@@ -23,7 +23,7 @@ export async function fetchGenerateQuestions(
 export async function fetchSubmitConfidence(
   candidateId: number,
   role: string,
-  experience: string,
+  experience: number,
   answers: { question: string; answer: string }[],
 ): Promise<{ confidence: number; label: string }> {
   const res = await fetch(
