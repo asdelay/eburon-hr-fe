@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CandidateFormModule from "@/modules/candidate/CandidateFormModule";
 
-export default function CandidatePage() {
+export default function CompleteProfilePage() {
   return (
     <div className="flex flex-col items-center min-h-screen p-6">
       <header className="mb-6 w-full max-w-lg">

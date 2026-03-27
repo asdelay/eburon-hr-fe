@@ -1,5 +1,3 @@
-import CandidatePage from "@/pages/candidate/candidate";
-
 export default function Page() {
-  return <CandidatePage />;
+  return <div className="flex-1 min-h-screen">Candidate Profile</div>;
 }
