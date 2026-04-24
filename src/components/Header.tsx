@@ -13,6 +13,7 @@ const Header = () => {
         className="opacity-90"
         width={48}
         height={48}
+        loading="eager"
       />
     </Link>
   );

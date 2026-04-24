@@ -19,7 +19,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`font-sans antialiased`}
+      className={`font-sans antialiased relative`}
     >
       <body>
         <ThemeProvider
