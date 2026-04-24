@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { sendCandidateData } from "@/app/candidate/actions";
+import { sendCandidateData } from "@/app/candidate/register-action";
 
 const initialState = { message: "" };
 

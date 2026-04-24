@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { verifyUser } from "@/dal/dal";
 import { cookies } from "next/headers";
 
 export const sendCandidateData = async (
@@ -61,6 +60,7 @@ export const updateCandidateProfile = async (
   prevState: CandidateProfileActionState,
   data: FormData
 ): Promise<CandidateProfileActionState> => {
+  const { verifyUser } = await import("@/dal/dal");
   const candidateId = data.get("candidateId");
   const experienceYears = Number(data.get("experience-y") ?? 0);
   const experienceMonths = Number(data.get("experience-m") ?? 0);
@@ -113,6 +113,7 @@ export const updateCandidateProfile = async (
 };
 
 export const deleteCandidateProfile = async (formData: FormData) => {
+  const { verifyUser } = await import("@/dal/dal");
   const candidateId = formData.get("candidateId");
   if (!candidateId || Number.isNaN(Number(candidateId))) {
     redirect("/candidate/profile");
