@@ -35,7 +35,7 @@ const HomePage = () => {
             variants={itemVariants}
           >
             <LinkButton href="/employer">I&apos;m an Employer</LinkButton>
-            <LinkButton href="/candidate" variant="outline">
+            <LinkButton href="/candidate/profile" variant="outline">
               I&apos;m a Candidate
             </LinkButton>
           </motion.div>
@@ -56,7 +56,7 @@ const HomePage = () => {
             description="Your Dream Job Effortlessly With Help of Eburon AI"
             buttonText="Try Now"
             imageUrl="/find.png"
-            url="/candidate"
+            url="/candidate/profile"
             className="lg:flex-row-reverse!"
           />
         </section>

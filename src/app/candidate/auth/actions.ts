@@ -1,7 +1,7 @@
 "use server"
 export const login = async (formData: FormData)  => {
     const email = formData.get('email');
-    if(!email) return {message: 'Include Email'};
+    if(!email) return {success:false, message: 'Include Email'};
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {

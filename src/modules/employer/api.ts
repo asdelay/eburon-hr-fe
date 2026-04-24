@@ -11,7 +11,7 @@ export async function fetchCandidatesForEmployer(
   if(filter) params.set('filter', filter);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/candidates/for-employer?${params}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/candidates/for-employer?${params}`, {credentials: 'include'}
   );
   if (!res.ok) throw new Error("Failed to fetch candidates");
   const data = await res.json();

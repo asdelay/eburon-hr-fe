@@ -55,7 +55,11 @@ export default function InterviewPage({ candidate, candidateId }: Props) {
           </div>
           <div>
             <span className="text-white/60">Experience:</span>{" "}
-            <span>{monthsToMonthYears(candidate.experience) || "—"}</span>
+            {candidate.experience ? (
+              <span>{monthsToMonthYears(candidate.experience)}</span>
+            ) : (
+              <span>—</span>
+            )}
           </div>
         </dl>
       </section>

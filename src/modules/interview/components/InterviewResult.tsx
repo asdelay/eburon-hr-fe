@@ -1,5 +1,7 @@
 import React from "react";
 import type { InterviewResult } from "../hooks";
+import Button from "@/components/Button";
+import Link from "next/link";
 
 type Props = {
   result: InterviewResult;
@@ -20,6 +22,9 @@ export default function InterviewResult({ result }: Props) {
           <span className="text-white/60">Assessment:</span> {result.label}
         </p>
       </div>
+      <Link href="/candidate/profile">
+        <Button className="mt-4">Back To Profile</Button>
+      </Link>
     </section>
   );
 }

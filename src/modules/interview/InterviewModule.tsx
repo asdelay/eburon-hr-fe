@@ -30,10 +30,13 @@ export default function InterviewModule({
     error,
     result,
     sttSupported,
+    isAudioLoading,
+    audioError,
     handleStartInterview,
     handleSubmitAnswer,
     handleMicClick,
     handleRetrySubmit,
+    handleReplayQuestionAudio,
   } = useInterview(candidateId, role, experience);
 
   if (result) {
@@ -67,6 +70,9 @@ export default function InterviewModule({
       isLastQuestion={isLastQuestion}
       isListening={isListening}
       sttSupported={sttSupported}
+      isAudioLoading={isAudioLoading}
+      onReplayAudio={handleReplayQuestionAudio}
+      audioError={audioError}
       error={error}
     />
   );

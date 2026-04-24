@@ -8,6 +8,7 @@ export async function fetchGenerateQuestions(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ role, experience }),
+      credentials: 'include'
     },
   );
   if (!res.ok) {
@@ -37,6 +38,7 @@ export async function fetchSubmitConfidence(
         experience,
         answers,
       }),
+      credentials: 'include'
     },
   );
   if (!res.ok) {
@@ -44,4 +46,26 @@ export async function fetchSubmitConfidence(
     throw new Error(err?.message ?? res.statusText ?? "Failed to assess");
   }
   return res.json();
+}
+
+export async function fetchQuestionAudio(
+  text: string,
+): Promise<{ blob: Blob; contentType: string }> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tts/synthesize`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.message ?? res.statusText ?? "Failed to generate audio");
+  }
+
+  const blob = await res.blob();
+  return {
+    blob,
+    contentType: res.headers.get("content-type") ?? "audio/mpeg",
+  };
 }

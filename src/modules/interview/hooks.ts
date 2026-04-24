@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchGenerateQuestions, fetchSubmitConfidence } from "./api";
+import {
+  fetchGenerateQuestions,
+  fetchQuestionAudio,
+  fetchSubmitConfidence,
+} from "./api";
 import {
   loadStored,
   saveStored,
@@ -29,7 +33,11 @@ export function useInterview(candidateId: string, role: string, experience: numb
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<InterviewResult | null>(null);
   const [sttSupported, setSttSupported] = useState(false);
+  const [isAudioLoading, setIsAudioLoading] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
 
   const currentIndex = answers.length;
   const currentQuestion = questions[currentIndex] ?? null;
@@ -92,7 +100,41 @@ export function useInterview(candidateId: string, role: string, experience: numb
     setSttSupported(!!getSpeechRecognition());
   }, []);
 
-  // Speech synthesis (TTS) when question appears
+  const cleanupAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current);
+      audioUrlRef.current = null;
+    }
+  }, []);
+
+  const playQuestionAudio = useCallback(
+    async (question: string) => {
+      cleanupAudio();
+      setAudioError(null);
+      setIsAudioLoading(true);
+      try {
+        const { blob } = await fetchQuestionAudio(question);
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audioRef.current = audio;
+        audioUrlRef.current = audioUrl;
+        await audio.play();
+      } catch (e) {
+        setAudioError(
+          e instanceof Error ? e.message : "Unable to play question audio",
+        );
+      } finally {
+        setIsAudioLoading(false);
+      }
+    },
+    [cleanupAudio],
+  );
+
+  // Deepgram TTS when question appears
   useEffect(() => {
     if (
       typeof window === "undefined" ||
@@ -101,12 +143,15 @@ export function useInterview(candidateId: string, role: string, experience: numb
       answers.length >= 5
     )
       return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(currentQuestion);
-    utterance.rate = 0.95;
-    window.speechSynthesis.speak(utterance);
-    return () => window.speechSynthesis.cancel();
-  }, [currentQuestion, phase, answers.length]);
+    void playQuestionAudio(currentQuestion);
+    return cleanupAudio;
+  }, [currentQuestion, phase, answers.length, playQuestionAudio, cleanupAudio]);
+
+  useEffect(() => {
+    if (phase !== "answering") {
+      cleanupAudio();
+    }
+  }, [phase, cleanupAudio]);
 
   // Speech recognition (STT) setup
   useEffect(() => {
@@ -207,6 +252,11 @@ export function useInterview(candidateId: string, role: string, experience: numb
     submitConfidence(questions, answers, role, experience);
   }, [questions, answers, role, experience, submitConfidence]);
 
+  const handleReplayQuestionAudio = useCallback(() => {
+    if (!currentQuestion || phase !== "answering") return;
+    void playQuestionAudio(currentQuestion);
+  }, [currentQuestion, phase, playQuestionAudio]);
+
   return {
     phase,
     questions,
@@ -220,10 +270,13 @@ export function useInterview(candidateId: string, role: string, experience: numb
     error,
     result,
     sttSupported,
+    isAudioLoading,
+    audioError,
     handleStartInterview,
     handleSubmitAnswer,
     handleMicClick,
     handleRetrySubmit,
+    handleReplayQuestionAudio,
     recognitionRef,
   };
 }

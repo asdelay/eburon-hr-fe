@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { Mic } from "lucide-react";
+import { Mic, Volume2 } from "lucide-react";
 
 type Props = {
   question: string;
@@ -11,6 +11,9 @@ type Props = {
   isLastQuestion: boolean;
   isListening: boolean;
   sttSupported: boolean;
+  isAudioLoading: boolean;
+  onReplayAudio: () => void;
+  audioError: string | null;
   error: string | null;
 };
 
@@ -24,6 +27,9 @@ export default function InterviewQuestion({
   isLastQuestion,
   isListening,
   sttSupported,
+  isAudioLoading,
+  onReplayAudio,
+  audioError,
   error,
 }: Props) {
   return (
@@ -54,10 +60,29 @@ export default function InterviewQuestion({
             <Mic size={20} aria-hidden />
           </button>
         )}
+        <button
+          type="button"
+          onClick={onReplayAudio}
+          disabled={isAudioLoading}
+          className="flex items-center justify-center w-10 h-10 rounded-full border transition-colors border-white/50 text-white/80 hover:bg-white/10 hover:border-white/80 disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:border-white/50"
+          aria-label="Replay question audio"
+        >
+          <Volume2 size={20} aria-hidden />
+        </button>
         <Button onClick={onSubmit} disabled={!answer.trim()}>
           {isLastQuestion ? "Submit & finish" : "Next question"}
         </Button>
       </div>
+      {isAudioLoading && (
+        <p className="mt-2 text-white/70 text-sm" role="status">
+          Generating question audio...
+        </p>
+      )}
+      {audioError && (
+        <p className="mt-2 text-yellow-300 text-sm" role="status">
+          {audioError}
+        </p>
+      )}
       {error && (
         <p className="mt-2 text-red-400 text-sm" role="alert">
           {error}

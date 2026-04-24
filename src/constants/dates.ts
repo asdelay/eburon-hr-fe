@@ -1,0 +1,2 @@
+export const FIFTEEN_MINUTES_IN_SECONDS = 60 * 15
+export const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30
