@@ -29,7 +29,6 @@ export default function CandidateProfileModule({
 
   const years = Math.floor((candidate.experience ?? 0) / 12);
   const months = (candidate.experience ?? 0) % 12;
-  console.log(candidate);
 
   return (
     <div className="w-full max-w-2xl rounded-xl border border-border bg-background/60 p-6 shadow-sm">

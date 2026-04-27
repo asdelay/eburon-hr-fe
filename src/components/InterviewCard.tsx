@@ -2,7 +2,6 @@ import { Interview } from "@/types/interview";
 import React from "react";
 
 const InterviewCard: React.FC<Interview> = (props) => {
-  console.log(props);
   return (
     <div className="w-full p-4 border border-white/30 rounded-2xl my-4">
       <div className="flex justify-between gap-2">
