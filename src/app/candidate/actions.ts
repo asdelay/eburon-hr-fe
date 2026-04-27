@@ -108,8 +108,8 @@ export const updateCandidateProfile = async (
     return { message: errorMessage };
   }
 
-  revalidateTag(`candidate:${candidateId}`);
-  revalidateTag("candidate-profile");
+  revalidateTag(`candidate:${candidateId}`, "max");
+  revalidateTag("candidate-profile", "max");
   revalidatePath("/candidate/profile");
   return { message: "Profile updated successfully.", success: true };
 };
@@ -133,8 +133,8 @@ export const deleteCandidateProfile = async (formData: FormData) => {
     }
   );
 
-  revalidateTag(`candidate:${candidateId}`);
-  revalidateTag("candidate-profile");
+  revalidateTag(`candidate:${candidateId}`, "max");
+  revalidateTag("candidate-profile", "max");
   const cookieStore = await cookies();
   cookieStore.delete('refresh_token')
   cookieStore.delete('access_token')
